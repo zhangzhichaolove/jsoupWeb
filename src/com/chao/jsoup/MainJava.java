@@ -71,7 +71,7 @@ public class MainJava {
                 }
                 session.close();
                 System.out.println(text);
-                if (identical > 10) {
+                if (identical >= elements.size()) {
                     System.out.println("重复数据超过限制，爬取其他接口。");
                     saveBaiSiBuDeJieApi(1, null);
                 }
@@ -116,7 +116,7 @@ public class MainJava {
                 session.close();
             }
             page = page + 1;
-            if (identical > 10) {
+            if (identical >= model.getList().size()) {
                 System.out.println("重复数据超过限制，爬取其他接口。");
                 saveSatin(1);
             }

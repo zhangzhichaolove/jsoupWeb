@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.chao.jsoup.model">
+    <class name="BuDeJieContent" table="budejie">
+
+        <id name="id">
+            <generator class="native"></generator>
+        </id>
+        <property name="type" column="type"/>
+        <property name="text" column="text" type="text"/>
+        <property name="user_id" column="user_id"/>
+        <property name="name" column="name"/>
+        <property name="screen_name" column="screen_name"/>
+        <property name="profile_image" column="profile_image"/>
+        <property name="created_at" column="created_at"/>
+        <property name="passtime" column="passtime"/>
+        <property name="love" column="love"/>
+        <property name="hate" column="hate"/>
+        <property name="comment" column="comment"/>
+        <property name="repost" column="repost"/>
+        <property name="bookmark" column="bookmark"/>
+        <property name="bimageuri" column="bimageuri"/>
+        <property name="status" column="status"/>
+        <property name="theme_id" column="theme_id"/>
+        <property name="theme_name" column="theme_name"/>
+        <property name="theme_type" column="theme_type"/>
+        <property name="videouri" column="videouri"/>
+        <property name="videotime" column="videotime"/>
+        <property name="original_pid" column="original_pid"/>
+        <property name="cache_version" column="cache_version"/>
+        <property name="playcount" column="playcount"/>
+        <property name="playfcount" column="playfcount"/>
+        <property name="cai" column="cai"/>
+        <property name="image1" column="image1"/>
+        <property name="image2" column="image2"/>
+        <property name="is_gif" column="is_gif"/>
+        <property name="image0" column="image0"/>
+        <property name="image_small" column="image_small"/>
+        <property name="cdn_img" column="cdn_img"/>
+        <property name="width" column="width"/>
+        <property name="height" column="height"/>
+        <property name="tag" column="tag"/>
+        <property name="t" column="t"/>
+        <property name="ding" column="ding"/>
+        <property name="favourite" column="favourite"/>
+    </class>
+</hibernate-mapping>

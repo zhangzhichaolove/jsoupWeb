@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="jsoup">
+    <output-path>$PROJECT_DIR$/out/artifacts/jsoup</output-path>
+    <root id="archive" name="jsoup.war">
+      <element id="javaee-facet-resources" facet="JsoupWeb/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="JsoupWeb" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

@@ -37,7 +37,7 @@
              #hibernate.format_sql true
         -->
         <!-- 将hibernate生成的sql语句打印到控制台 -->
-        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.show_sql">false</property>
         <!-- 将hibernate生成的sql语句格式化(语法缩进) -->
         <property name="hibernate.format_sql">true</property>
 

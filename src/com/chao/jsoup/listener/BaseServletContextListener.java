@@ -23,7 +23,7 @@ public class BaseServletContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         System.out.println("context创建了！");
-        MainJava.start();
+        //MainJava.start();
         System.out.println("任务启动成功!");
     }
 

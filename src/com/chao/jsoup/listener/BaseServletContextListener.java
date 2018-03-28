@@ -1,5 +1,6 @@
 package com.chao.jsoup.listener;
 
+import com.chao.jsoup.util.ExecutorServiceUtils;
 import com.chao.jsoup.util.TimerManager;
 
 import javax.servlet.ServletContextEvent;
@@ -24,7 +25,18 @@ public class BaseServletContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         System.out.println("context创建了！");
         //MainJava.start();
-        new TimerManager();
+        ExecutorServiceUtils.getInstance().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                new TimerManager();
+            }
+        });
+
         System.out.println("任务启动成功!");
     }
 

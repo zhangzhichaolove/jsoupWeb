@@ -32,6 +32,11 @@ public class UpdateBaiSiBuDeJie {
         saveBaiSiBuDeJieApi(1, null);
     }
 
+    public static void start(Integer maxCount) {
+        maxContinuityRepeat = maxCount;
+        start();
+    }
+
     public static void start() {
         if (!startRun) {
             startRun = true;

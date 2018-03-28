@@ -2,6 +2,7 @@ package com.chao.jsoup.servlet;
 
 import com.chao.jsoup.request.UpdateBaiSiBuDeJie;
 import com.chao.jsoup.util.JsonUtil;
+import com.mysql.jdbc.StringUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +24,18 @@ public class StartServlet extends HttpServlet {
         } else {
             resp.setContentType("text/html;charset=utf-8");
         }
-        UpdateBaiSiBuDeJie.start();
+        String count = req.getParameter("count");
+        if (!StringUtils.isNullOrEmpty(count)) {
+            try {
+                Integer maxCount = Integer.valueOf(count);
+                UpdateBaiSiBuDeJie.start(maxCount);
+            } catch (NumberFormatException e) {
+                UpdateBaiSiBuDeJie.start();
+                e.printStackTrace();
+            }
+        } else {
+            UpdateBaiSiBuDeJie.start();
+        }
         resp.getWriter().write(JsonUtil.toJsonData(UpdateBaiSiBuDeJie.startRun ? "爬虫服务正在运行！" : "爬虫服务已经停止！"));
     }
 

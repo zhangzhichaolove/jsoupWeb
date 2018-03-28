@@ -40,7 +40,6 @@ public class UpdateBaiSiBuDeJie {
     public static void start() {
         if (!startRun) {
             startRun = true;
-            HibernateUtils.openSession();
             ExecutorServiceUtils.getInstance().execute(new Runnable() {
                 @Override
                 public void run() {

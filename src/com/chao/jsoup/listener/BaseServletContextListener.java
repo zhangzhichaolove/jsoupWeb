@@ -1,6 +1,7 @@
 package com.chao.jsoup.listener;
 
 import com.chao.jsoup.util.ExecutorServiceUtils;
+import com.chao.jsoup.util.HibernateUtils;
 import com.chao.jsoup.util.TimerManager;
 
 import javax.servlet.ServletContextEvent;
@@ -24,6 +25,7 @@ public class BaseServletContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         System.out.println("context创建了！");
+        HibernateUtils.openSession();
         //UpdateBaiSiBuDeJie.start();
         ExecutorServiceUtils.getInstance().execute(new Runnable() {
             @Override

@@ -17,7 +17,7 @@
         <!-- 数据库驱动 -->
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <!-- 数据库url 自动重新连接，自动重新连接连接池 autoReconnect=true&amp;autoReconnectForPools=true-->
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/jsoup?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/data?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;autoReconnectForPools=true&amp;useSSL=false
         </property>
         <!-- 数据库连接用户名 -->
         <property name="hibernate.connection.username">root</property>

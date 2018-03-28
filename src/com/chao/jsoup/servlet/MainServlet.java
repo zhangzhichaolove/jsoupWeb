@@ -1,6 +1,6 @@
 package com.chao.jsoup.servlet;
 
-import com.chao.jsoup.MainJava;
+import com.chao.jsoup.request.UpdateBaiSiBuDeJie;
 import com.chao.jsoup.util.JsonUtil;
 
 import javax.servlet.ServletException;
@@ -23,7 +23,7 @@ public class MainServlet extends HttpServlet {
         } else {
             resp.setContentType("text/html;charset=utf-8");
         }
-        resp.getWriter().write(JsonUtil.toJsonData(MainJava.startRun ? "爬虫服务正在运行！" : "爬虫服务已经停止！"));
+        resp.getWriter().write(JsonUtil.toJsonData(UpdateBaiSiBuDeJie.startRun ? "爬虫服务正在运行！" : "爬虫服务已经停止！"));
     }
 
     @Override

@@ -76,6 +76,7 @@
          -->
         <mapping resource="com/chao/jsoup/model/Stain.hbm.xml"/>
         <mapping resource="com/chao/jsoup/model/BuDeJie.hbm.xml"/>
+        <mapping resource="com/chao/jsoup/model/RequestCount.hbm.xml"/>
 
     </session-factory>
 </hibernate-configuration>

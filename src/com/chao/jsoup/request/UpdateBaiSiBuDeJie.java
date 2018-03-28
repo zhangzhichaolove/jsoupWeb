@@ -1,20 +1,25 @@
-package com.chao.jsoup;
+package com.chao.jsoup.request;
 
+import com.chao.jsoup.HttpTool;
 import com.chao.jsoup.model.BuDeJieContent;
 import com.chao.jsoup.model.BuDeJieModel;
+import com.chao.jsoup.model.RequestCount;
 import com.chao.jsoup.util.ExecutorServiceUtils;
 import com.chao.jsoup.util.HibernateUtils;
+import com.chao.jsoup.util.TableUtils;
 import com.google.gson.Gson;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.Date;
+
 /**
  * Created by Chao on 2017/10/11.
  */
-public class MainJava {
-    private static int addCount = 0;//新增统计
+public class UpdateBaiSiBuDeJie {
+    private static Long addCount = 0L;//新增统计
     private static int continuityRepeat = 0;//连续重复统计
     private static int maxContinuityRepeat = 20;//最大连续重复限制
     private static Gson gson = new Gson();
@@ -35,7 +40,7 @@ public class MainJava {
                 @Override
                 public void run() {
                     //saveSatin(1);
-                    addCount = 0;
+                    addCount = 0L;
                     saveBaiSiBuDeJieApi(1, null);
                 }
             });
@@ -45,53 +50,6 @@ public class MainJava {
     public static void stop() {
         startRun = false;
     }
-
-//    public static void saveSatin(int page) {
-//        try {
-//            String htmlStr = HttpTool.doGet("http://www.budejie.com/text/" + page);
-//            // 将获取的网页 HTML 源代码转化为 Document
-//            Document doc = Jsoup.parse(htmlStr);
-//            //Elements list = doc.getElementsByClass("j-list-user");
-//            Elements elements = doc.getElementsByClass("j-r-list-c-desc");
-//            //doc.getElementsByClass("j-r-list-c-desc").get(0).getElementsByTag("a").get(0).getAllElements().get(0).text();
-//            int identical = 0;
-//            for (int i = 0; i < elements.size(); i++) {
-//                Element element = elements.get(i);
-//                String text = element.getElementsByTag("a").get(0).getAllElements().get(0).text();
-//                Session session = HibernateUtils.openSession();
-//                Criteria criteria = session.createCriteria(SatinModel.class);
-//                criteria.add(Restrictions.eq("content", text));
-//                SatinModel stain = (SatinModel) criteria.uniqueResult();
-//                if (stain == null) {
-//                    Transaction transaction = session.beginTransaction();
-//                    SatinModel model = new SatinModel();
-//                    model.setId(null);
-//                    model.setContent(text);
-//                    session.save(model);
-//                    transaction.commit();
-//                } else {
-//                    identical = identical + 1;
-//                }
-//                session.close();
-//                System.out.println(text);
-//                if (identical >= elements.size()) {
-//                    System.out.println("重复数据超过限制，爬取其他接口。");
-//                    saveBaiSiBuDeJieApi(1, null);
-//                }
-//            }
-//            Elements title = doc.getElementsByTag("title");
-//            System.out.println(title.text());
-//            if (startRun) {
-//                saveSatin(page + 1);
-//            } else {
-//                System.out.println("服务停止!");
-//            }
-//        } catch (CommonException e) {
-//            e.printStackTrace();
-//            System.out.println("请求失败了");
-//            saveBaiSiBuDeJieApi(1, null);
-//        }
-//    }
 
 
     public static void saveBaiSiBuDeJieApi(int page, String maxtime) {
@@ -127,19 +85,33 @@ public class MainJava {
             if (continuityRepeat >= maxContinuityRepeat) {//此次未新增任何内容，完全重复。
                 System.out.println("重复数据超过限制，今日任务停止！此次新增数据：" + addCount);
                 startRun = false;
+                saveCount();
                 return;
             }
             if (startRun) {
                 saveBaiSiBuDeJieApi(page, maxtime);
             } else {
                 System.out.println("服务停止！此次新增数据：" + addCount);
+                saveCount();
                 return;
             }
         } else {
             startRun = false;
+            saveCount();
             System.out.println("接口数据异常，停止任务！此次新增数据：" + addCount);
         }
+    }
 
+    private static void saveCount() {
+        RequestCount budejie = TableUtils.findCreateTable("budejie");
+        Session session = HibernateUtils.openSession();
+        budejie.setDataCount(TableUtils.findTableCount("budejie"));
+        budejie.setLastCount(addCount);
+        budejie.setLastUpdateTime(new Date());
+        Transaction transaction = session.beginTransaction();
+        session.update(budejie);
+        transaction.commit();
+        session.close();
     }
 
 }

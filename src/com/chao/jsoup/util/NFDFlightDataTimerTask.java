@@ -1,6 +1,6 @@
 package com.chao.jsoup.util;
 
-import com.chao.jsoup.MainJava;
+import com.chao.jsoup.request.UpdateBaiSiBuDeJie;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,7 +21,7 @@ public class NFDFlightDataTimerTask extends TimerTask {
         try {
             //在这里写你要执行的内容
             System.out.println("执行当前时间" + formatter.format(Calendar.getInstance().getTime()));
-            MainJava.start();
+            UpdateBaiSiBuDeJie.start();
         } catch (Exception e) {
             System.out.println("-------------解析信息发生异常--------------");
         }

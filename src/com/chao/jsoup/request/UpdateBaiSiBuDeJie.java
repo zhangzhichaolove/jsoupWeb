@@ -109,6 +109,7 @@ public class UpdateBaiSiBuDeJie {
     }
 
     private static void saveCount() {
+        maxContinuityRepeat = 20;
         RequestCount budejie = TableUtils.findCreateTable("budejie");
         Session session = HibernateUtils.openSession();
         budejie.setDataCount(TableUtils.findTableCount("budejie"));

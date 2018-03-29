@@ -81,7 +81,7 @@ public class BuDeJieContent {
     private String theme_name;
     private String theme_type;
     private String videouri;
-    private int videotime;
+    private Integer videotime;
     private String original_pid;
     private int cache_version;
     private String playcount;
@@ -90,7 +90,7 @@ public class BuDeJieContent {
     private String weixin_url;
     private String image1;
     private String image2;
-    private String is_gif;
+    private boolean is_gif;
     private String image0;
     private String image_small;
     private String cdn_img;
@@ -295,11 +295,11 @@ public class BuDeJieContent {
         this.videouri = videouri;
     }
 
-    public int getVideotime() {
+    public Integer getVideotime() {
         return videotime;
     }
 
-    public void setVideotime(int videotime) {
+    public void setVideotime(Integer videotime) {
         this.videotime = videotime;
     }
 
@@ -367,11 +367,11 @@ public class BuDeJieContent {
         this.image2 = image2;
     }
 
-    public String getIs_gif() {
+    public boolean getIs_gif() {
         return is_gif;
     }
 
-    public void setIs_gif(String is_gif) {
+    public void setIs_gif(boolean is_gif) {
         this.is_gif = is_gif;
     }
 

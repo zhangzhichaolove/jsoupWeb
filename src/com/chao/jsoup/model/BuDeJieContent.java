@@ -90,7 +90,7 @@ public class BuDeJieContent {
     private String weixin_url;
     private String image1;
     private String image2;
-    private boolean is_gif;
+    private Boolean is_gif;
     private String image0;
     private String image_small;
     private String cdn_img;
@@ -367,11 +367,11 @@ public class BuDeJieContent {
         this.image2 = image2;
     }
 
-    public boolean getIs_gif() {
+    public Boolean getIs_gif() {
         return is_gif;
     }
 
-    public void setIs_gif(boolean is_gif) {
+    public void setIs_gif(Boolean is_gif) {
         this.is_gif = is_gif;
     }
 

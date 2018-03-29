@@ -5,6 +5,7 @@ import com.chao.jsoup.model.BuDeJieContent;
 import com.chao.jsoup.model.BuDeJieModel;
 import com.chao.jsoup.model.RequestCount;
 import com.chao.jsoup.util.ExecutorServiceUtils;
+import com.chao.jsoup.util.GsonUtils;
 import com.chao.jsoup.util.HibernateUtils;
 import com.chao.jsoup.util.TableUtils;
 import com.google.gson.Gson;
@@ -22,7 +23,7 @@ public class UpdateBaiSiBuDeJie {
     private static Long addCount = 0L;//新增统计
     private static int continuityRepeat = 0;//连续重复统计
     private static int maxContinuityRepeat = 20;//最大连续重复限制
-    private static Gson gson = new Gson();
+    private static Gson gson = GsonUtils.getGson();
     public static boolean startRun = false;
 
     public static void main(String[] args) {
@@ -57,15 +58,16 @@ public class UpdateBaiSiBuDeJie {
 
 
     public static void saveBaiSiBuDeJieApi(int page, String maxtime) {
-        System.out.println("当前加载页码：" + page);
+        //System.out.println("当前加载页码：" + page);
         String json = HttpTool.doGet("http://api.budejie.com/api/api_open.php?a=list&c=data&type=1&page=" + page + "&maxtime=" + maxtime);
+        //System.out.println(json);
         BuDeJieModel model = gson.fromJson(json, BuDeJieModel.class);
         if (model != null) {
             maxtime = model.getInfo().getMaxtime();
             int identical = 0;//完全相同计数
             for (int i = 0; i < model.getList().size(); i++) {
                 BuDeJieContent content = model.getList().get(i);
-                System.out.println(content.getText());
+                //System.out.println(content.getText());
                 Session session = HibernateUtils.openSession();
                 Criteria criteria = session.createCriteria(BuDeJieContent.class);
                 criteria.add(Restrictions.eq("text", content.getText()));

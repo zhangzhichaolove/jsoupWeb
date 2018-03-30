@@ -30,7 +30,6 @@ public class NFDFlightDataTimerTask extends TimerTask {
                     System.out.println("-------------任务运行出现异常--------------");
                     e.printStackTrace();
                 }
-                new TimerManager();
             }
         });
         ExecutorServiceUtils.getInstance().execute(new Runnable() {
@@ -44,7 +43,6 @@ public class NFDFlightDataTimerTask extends TimerTask {
                     System.out.println("-------------任务运行出现异常--------------");
                     e.printStackTrace();
                 }
-                new TimerManager();
             }
         });
     }

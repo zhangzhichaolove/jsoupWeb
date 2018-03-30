@@ -27,7 +27,6 @@ public class UpdateBaiSiBuDeJieAppData {
 
     public static void main(String[] args) {
         HibernateUtils.openSession();
-        //saveSatin(1);
         start();
     }
 
@@ -58,6 +57,7 @@ public class UpdateBaiSiBuDeJieAppData {
         //System.out.println("当前加载页码：" + page);
         String json = HttpTool.doGet("http://d.api.budejie.com/topic/recommend/budejie-android-6.9.2/0-20.json");
         //System.out.println(json);
+        Session session = HibernateUtils.openSession();
         BuDeJieAppBean model = gson.fromJson(json, BuDeJieAppBean.class);
         if (model != null) {
             int identical = 0;//完全相同计数
@@ -100,7 +100,6 @@ public class UpdateBaiSiBuDeJieAppData {
                         content.setThumbnail(bean.getVideo().getThumbnail().get(0));
                         break;
                 }
-                Session session = HibernateUtils.openSession();
                 Criteria criteria = session.createCriteria(BuDeJieAppContent.class);
                 criteria.add(Restrictions.eq("text", content.getText()));
                 BuDeJieAppContent buDeJieContent = (BuDeJieAppContent) criteria.uniqueResult();
@@ -114,11 +113,11 @@ public class UpdateBaiSiBuDeJieAppData {
                 } else {
                     identical = identical + 1;//统计重复数量
                 }
-                session.close();
             }
             if (identical >= model.getList().size()) {//此次未新增任何内容，完全重复。
                 continuityRepeat = continuityRepeat + 1;
             }
+            session.close();
             if (continuityRepeat >= maxContinuityRepeat) {//此次未新增任何内容，完全重复。
                 System.out.println("重复数据超过限制，今日任务停止！此次新增数据：" + addCount);
                 saveCount();

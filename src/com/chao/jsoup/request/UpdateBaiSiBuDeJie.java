@@ -26,9 +26,8 @@ public class UpdateBaiSiBuDeJie {
 
     public static void main(String[] args) {
         HibernateUtils.openSession();
-        startRun = true;
-        //saveSatin(1);
-        saveBaiSiBuDeJieApi(1, null);
+        startRun = false;
+        start();
     }
 
     public static void start(Integer maxCount) {
@@ -69,12 +68,12 @@ public class UpdateBaiSiBuDeJie {
         //System.out.println(json);
         BuDeJieModel model = gson.fromJson(json, BuDeJieModel.class);
         if (model != null) {
+            Session session = HibernateUtils.openSession();
             maxtime = model.getInfo().getMaxtime();
             int identical = 0;//完全相同计数
             for (int i = 0; i < model.getList().size(); i++) {
                 BuDeJieContent content = model.getList().get(i);
                 //System.out.println(content.getText());
-                Session session = HibernateUtils.openSession();
                 Criteria criteria = session.createCriteria(BuDeJieContent.class);
                 criteria.add(Restrictions.eq("text", content.getText()));
                 BuDeJieContent buDeJieContent = (BuDeJieContent) criteria.uniqueResult();
@@ -88,8 +87,8 @@ public class UpdateBaiSiBuDeJie {
                 } else {
                     identical = identical + 1;//统计重复数量
                 }
-                session.close();
             }
+            session.close();
             page = page + 1;
             if (identical >= model.getList().size()) {//此次未新增任何内容，完全重复。
                 continuityRepeat = continuityRepeat + 1;

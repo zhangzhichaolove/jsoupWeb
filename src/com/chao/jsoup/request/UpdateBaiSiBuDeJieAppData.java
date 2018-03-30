@@ -5,16 +5,14 @@ import com.chao.jsoup.bean.BuDeJieAppBean;
 import com.chao.jsoup.bean.BuDeJieAppList;
 import com.chao.jsoup.model.BuDeJieAppContent;
 import com.chao.jsoup.model.RequestCount;
-import com.chao.jsoup.util.ExecutorServiceUtils;
-import com.chao.jsoup.util.GsonUtils;
-import com.chao.jsoup.util.HibernateUtils;
-import com.chao.jsoup.util.TableUtils;
+import com.chao.jsoup.util.*;
 import com.google.gson.Gson;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -26,11 +24,9 @@ public class UpdateBaiSiBuDeJieAppData {
     private static int continuityRepeat = 0;//连续重复统计
     private static int maxContinuityRepeat = 20;//最大连续重复限制
     private static Gson gson = GsonUtils.getGson();
-    public static boolean startRun = false;
 
     public static void main(String[] args) {
         HibernateUtils.openSession();
-        startRun = true;
         //saveSatin(1);
         saveBaiSiBuDeJieApi();
     }
@@ -41,21 +37,20 @@ public class UpdateBaiSiBuDeJieAppData {
     }
 
     public static void start() {
-        if (!startRun) {
-            startRun = true;
-            ExecutorServiceUtils.getInstance().execute(new Runnable() {
-                @Override
-                public void run() {
-                    //saveSatin(1);
+        ExecutorServiceUtils.getInstance().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(6000);
                     addCount = 0L;
+                    System.out.println("UpdateBaiSiBuDeJieAppData执行，当前时间" + TimeUtils.getFormatter().format(Calendar.getInstance().getTime()));
                     saveBaiSiBuDeJieApi();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    System.out.println("-------------UpdateBaiSiBuDeJieAppData任务运行出现异常--------------");
                 }
-            });
-        }
-    }
-
-    public static void stop() {
-        startRun = false;
+            }
+        });
     }
 
 
@@ -126,19 +121,10 @@ public class UpdateBaiSiBuDeJieAppData {
             }
             if (continuityRepeat >= maxContinuityRepeat) {//此次未新增任何内容，完全重复。
                 System.out.println("重复数据超过限制，今日任务停止！此次新增数据：" + addCount);
-                startRun = false;
-                saveCount();
-                return;
-            }
-            if (startRun) {
-                saveBaiSiBuDeJieApi();
-            } else {
-                System.out.println("服务停止！此次新增数据：" + addCount);
                 saveCount();
                 return;
             }
         } else {
-            startRun = false;
             saveCount();
             System.out.println("接口数据异常，停止任务！此次新增数据：" + addCount);
         }
@@ -146,9 +132,9 @@ public class UpdateBaiSiBuDeJieAppData {
 
     private static void saveCount() {
         maxContinuityRepeat = 20;
-        RequestCount budejie = TableUtils.findCreateTable("budejie");
+        RequestCount budejie = TableUtils.findCreateTable("budejie_app");
         Session session = HibernateUtils.openSession();
-        budejie.setDataCount(TableUtils.findTableCount("budejie"));
+        budejie.setDataCount(TableUtils.findTableCount("budejie_app"));
         budejie.setLastCount(addCount);
         budejie.setLastUpdateTime(new Date());
         Transaction transaction = session.beginTransaction();

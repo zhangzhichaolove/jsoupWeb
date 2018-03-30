@@ -4,16 +4,14 @@ import com.chao.jsoup.HttpTool;
 import com.chao.jsoup.model.BuDeJieContent;
 import com.chao.jsoup.model.BuDeJieModel;
 import com.chao.jsoup.model.RequestCount;
-import com.chao.jsoup.util.ExecutorServiceUtils;
-import com.chao.jsoup.util.GsonUtils;
-import com.chao.jsoup.util.HibernateUtils;
-import com.chao.jsoup.util.TableUtils;
+import com.chao.jsoup.util.*;
 import com.google.gson.Gson;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -44,9 +42,17 @@ public class UpdateBaiSiBuDeJie {
             ExecutorServiceUtils.getInstance().execute(new Runnable() {
                 @Override
                 public void run() {
+                    try {
+                        Thread.sleep(5000);
+                        addCount = 0L;
+                        System.out.println("UpdateBaiSiBuDeJie执行，当前时间" + TimeUtils.getFormatter().format(Calendar.getInstance().getTime()));
+                        saveBaiSiBuDeJieApi(1, null);
+                    } catch (InterruptedException e) {
+                        startRun = false;
+                        System.out.println("-------------UpdateBaiSiBuDeJie任务运行出现异常--------------");
+                        e.printStackTrace();
+                    }
                     //saveSatin(1);
-                    addCount = 0L;
-                    saveBaiSiBuDeJieApi(1, null);
                 }
             });
         }

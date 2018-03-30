@@ -4,7 +4,6 @@ import com.chao.jsoup.request.UpdateBaiSiBuDeJie;
 import com.chao.jsoup.request.UpdateBaiSiBuDeJieAppData;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.TimerTask;
 
 /**
@@ -19,32 +18,8 @@ public class NFDFlightDataTimerTask extends TimerTask {
 
     @Override
     public void run() {
-        ExecutorServiceUtils.getInstance().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(5000);
-                    System.out.println("UpdateBaiSiBuDeJie执行，当前时间" + formatter.format(Calendar.getInstance().getTime()));
-                    UpdateBaiSiBuDeJie.start();
-                } catch (InterruptedException e) {
-                    System.out.println("-------------UpdateBaiSiBuDeJie任务运行出现异常--------------");
-                    e.printStackTrace();
-                }
-            }
-        });
-        ExecutorServiceUtils.getInstance().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(6000);
-                    System.out.println("UpdateBaiSiBuDeJieAppData执行，当前时间" + formatter.format(Calendar.getInstance().getTime()));
-                    UpdateBaiSiBuDeJieAppData.start();
-                } catch (InterruptedException e) {
-                    System.out.println("-------------UpdateBaiSiBuDeJieAppData任务运行出现异常--------------");
-                    e.printStackTrace();
-                }
-            }
-        });
+        UpdateBaiSiBuDeJie.start();
+        UpdateBaiSiBuDeJieAppData.start();
     }
 
 }

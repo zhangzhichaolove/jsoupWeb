@@ -1,6 +1,7 @@
 package com.chao.jsoup.util;
 
 import com.chao.jsoup.request.UpdateBaiSiBuDeJie;
+import com.chao.jsoup.request.UpdateBaiSiBuDeJieAppData;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -18,13 +19,34 @@ public class NFDFlightDataTimerTask extends TimerTask {
 
     @Override
     public void run() {
-        try {
-            //在这里写你要执行的内容
-            System.out.println("执行当前时间" + formatter.format(Calendar.getInstance().getTime()));
-            UpdateBaiSiBuDeJie.start();
-        } catch (Exception e) {
-            System.out.println("-------------解析信息发生异常--------------");
-        }
+        ExecutorServiceUtils.getInstance().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(5000);
+                    System.out.println("UpdateBaiSiBuDeJie执行，当前时间" + formatter.format(Calendar.getInstance().getTime()));
+                    UpdateBaiSiBuDeJie.start();
+                } catch (InterruptedException e) {
+                    System.out.println("-------------任务运行出现异常--------------");
+                    e.printStackTrace();
+                }
+                new TimerManager();
+            }
+        });
+        ExecutorServiceUtils.getInstance().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(6000);
+                    System.out.println("UpdateBaiSiBuDeJieAppData执行，当前时间" + formatter.format(Calendar.getInstance().getTime()));
+                    UpdateBaiSiBuDeJieAppData.start();
+                } catch (InterruptedException e) {
+                    System.out.println("-------------任务运行出现异常--------------");
+                    e.printStackTrace();
+                }
+                new TimerManager();
+            }
+        });
     }
 
 }

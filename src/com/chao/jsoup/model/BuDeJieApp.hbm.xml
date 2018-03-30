@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.chao.jsoup.model">
+    <class name="BuDeJieAppContent" table="budejie_app">
+        <id name="id">
+            <generator class="native"></generator>
+        </id>
+        <property name="type" column="type"/>
+        <property name="text" column="text" type="text"/>
+        <property name="username" column="username"/>
+        <property name="uid" column="uid"/>
+        <property name="header" column="header"/>
+        <property name="comment" column="comment"/>
+        <property name="top_commentsVoiceuri" column="top_commentsVoiceuri"/>
+        <property name="top_commentsContent" column="top_commentsContent"/>
+        <property name="top_commentsHeader" column="top_commentsHeader"/>
+        <property name="top_commentsName" column="top_commentsName"/>
+        <property name="top_comments_t_Voiceuri" column="top_comments_t_Voiceuri"/>
+        <property name="top_comments_t_Content" column="top_comments_t_Content"/>
+        <property name="top_comments_t_Header" column="top_comments_t_Header"/>
+        <property name="top_comments_t_Name" column="top_comments_t_Name"/>
+        <property name="passtime" column="passtime"/>
+        <property name="soureid" column="soureid"/>
+        <property name="up" column="up"/>
+        <property name="down" column="down"/>
+        <property name="forward" column="forward"/>
+        <property name="image" column="image"/>
+        <property name="gif" column="gif"/>
+        <property name="video" column="video"/>
+        <property name="thumbnail" column="thumbnail"/>
+    </class>
+</hibernate-mapping>

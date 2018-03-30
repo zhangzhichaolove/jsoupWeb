@@ -29,7 +29,7 @@ public class JsonUtil {
         return gson.toJson(result);
     }
 
-//    public static <T> String toJsonArray(List<T> bean) {
+//    public static <T> String toJsonArray(BuDeJieAppList<T> bean) {
 //        Result result = new Result();
 //        result.setCode(200);
 //        result.setMsg("成功!");

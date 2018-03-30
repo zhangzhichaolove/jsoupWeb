@@ -22,13 +22,13 @@ public class UpdateBaiSiBuDeJieAppData {
 
     private static Long addCount = 0L;//新增统计
     private static int continuityRepeat = 0;//连续重复统计
-    private static int maxContinuityRepeat = 20;//最大连续重复限制
+    private static int maxContinuityRepeat = 50;//最大连续重复限制
     private static Gson gson = GsonUtils.getGson();
 
     public static void main(String[] args) {
         HibernateUtils.openSession();
         //saveSatin(1);
-        saveBaiSiBuDeJieApi();
+        start();
     }
 
     public static void start(Integer maxCount) {

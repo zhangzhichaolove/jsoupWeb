@@ -69,7 +69,7 @@ public class UpdateBaiSiBuDeJieAppData {
             for (int i = 0; i < model.getList().size(); i++) {
                 BuDeJieAppList bean = model.getList().get(i);
                 BuDeJieAppContent content = new BuDeJieAppContent();
-                System.out.println(bean.getText());
+                //System.out.println(bean.getText());
                 content.setType(bean.getType());
                 content.setText(bean.getText());
                 if (bean.getU() != null/*StringUtils.isNullOrEmpty()*/) {

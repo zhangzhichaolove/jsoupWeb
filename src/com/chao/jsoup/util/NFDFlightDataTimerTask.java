@@ -27,7 +27,7 @@ public class NFDFlightDataTimerTask extends TimerTask {
                     System.out.println("UpdateBaiSiBuDeJie执行，当前时间" + formatter.format(Calendar.getInstance().getTime()));
                     UpdateBaiSiBuDeJie.start();
                 } catch (InterruptedException e) {
-                    System.out.println("-------------任务运行出现异常--------------");
+                    System.out.println("-------------UpdateBaiSiBuDeJie任务运行出现异常--------------");
                     e.printStackTrace();
                 }
             }
@@ -40,7 +40,7 @@ public class NFDFlightDataTimerTask extends TimerTask {
                     System.out.println("UpdateBaiSiBuDeJieAppData执行，当前时间" + formatter.format(Calendar.getInstance().getTime()));
                     UpdateBaiSiBuDeJieAppData.start();
                 } catch (InterruptedException e) {
-                    System.out.println("-------------任务运行出现异常--------------");
+                    System.out.println("-------------UpdateBaiSiBuDeJieAppData任务运行出现异常--------------");
                     e.printStackTrace();
                 }
             }

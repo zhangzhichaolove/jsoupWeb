@@ -83,11 +83,6 @@ public class UpdateBaiSiBuDeJieAppData {
                     content.setTop_commentsVoiceuri(bean.getTop_comments().get(0).getU().getVoiceuri());
                     content.setTop_commentsName(bean.getTop_comments().get(0).getU().getName());
                     content.setTop_commentsHeader(bean.getTop_comments().get(0).getU().getHeader().get(0));
-                } else if (bean.getTop_comments() != null && bean.getTop_comments().size() > 1) {
-                    content.setTop_comments_t_Content(bean.getTop_comments().get(1).getContent());
-                    content.setTop_comments_t_Voiceuri(bean.getTop_comments().get(1).getU().getVoiceuri());
-                    content.setTop_comments_t_Name(bean.getTop_comments().get(1).getU().getName());
-                    content.setTop_comments_t_Header(bean.getTop_comments().get(1).getU().getHeader().get(0));
                 }
                 content.setPasstime(bean.getPasstime());
                 content.setSoureid(bean.getId());

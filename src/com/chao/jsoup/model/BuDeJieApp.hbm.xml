@@ -17,10 +17,6 @@
         <property name="top_commentsContent" column="top_commentsContent"/>
         <property name="top_commentsHeader" column="top_commentsHeader"/>
         <property name="top_commentsName" column="top_commentsName"/>
-        <property name="top_comments_t_Voiceuri" column="top_comments_t_Voiceuri"/>
-        <property name="top_comments_t_Content" column="top_comments_t_Content"/>
-        <property name="top_comments_t_Header" column="top_comments_t_Header"/>
-        <property name="top_comments_t_Name" column="top_comments_t_Name"/>
         <property name="passtime" column="passtime"/>
         <property name="soureid" column="soureid"/>
         <property name="up" column="up"/>

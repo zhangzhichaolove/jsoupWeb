@@ -19,10 +19,6 @@ public class BuDeJieAppContent {
     private String top_commentsContent;//text
     private String top_commentsHeader;//http://qzapp.qlogo.cn/qzapp/100336987/1A279B2621FC54E35217FDB6C43C9291/100
     private String top_commentsName;//InstMR
-    private String top_comments_t_Voiceuri;//text
-    private String top_comments_t_Content;//text
-    private String top_comments_t_Header;//http://qzapp.qlogo.cn/qzapp/100336987/1A279B2621FC54E35217FDB6C43C9291/100
-    private String top_comments_t_Name;//InstMR
     private Date passtime;//2017-10-13 05:18:42
     private Integer soureid;//26555457
     private Integer up = 0;//498
@@ -105,14 +101,6 @@ public class BuDeJieAppContent {
         this.top_commentsContent = top_commentsContent;
     }
 
-    public String getTop_comments_t_Content() {
-        return top_comments_t_Content;
-    }
-
-    public void setTop_comments_t_Content(String top_comments_t_Content) {
-        this.top_comments_t_Content = top_comments_t_Content;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -183,30 +171,6 @@ public class BuDeJieAppContent {
 
     public void setTop_commentsVoiceuri(String top_commentsVoiceuri) {
         this.top_commentsVoiceuri = top_commentsVoiceuri;
-    }
-
-    public String getTop_comments_t_Voiceuri() {
-        return top_comments_t_Voiceuri;
-    }
-
-    public void setTop_comments_t_Voiceuri(String top_comments_t_Voiceuri) {
-        this.top_comments_t_Voiceuri = top_comments_t_Voiceuri;
-    }
-
-    public String getTop_comments_t_Header() {
-        return top_comments_t_Header;
-    }
-
-    public void setTop_comments_t_Header(String top_comments_t_Header) {
-        this.top_comments_t_Header = top_comments_t_Header;
-    }
-
-    public String getTop_comments_t_Name() {
-        return top_comments_t_Name;
-    }
-
-    public void setTop_comments_t_Name(String top_comments_t_Name) {
-        this.top_comments_t_Name = top_comments_t_Name;
     }
 
     public Date getPasstime() {

@@ -123,6 +123,8 @@ public class UpdateBaiSiBuDeJieAppData {
                 System.out.println("重复数据超过限制，今日任务停止！此次新增数据：" + addCount);
                 saveCount();
                 return;
+            } else {
+                saveBaiSiBuDeJieApi();
             }
         } else {
             saveCount();

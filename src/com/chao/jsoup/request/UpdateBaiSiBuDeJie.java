@@ -45,7 +45,12 @@ public class UpdateBaiSiBuDeJie {
                         Thread.sleep(5000);
                         addCount = 0L;
                         System.out.println("UpdateBaiSiBuDeJie执行，当前时间" + TimeUtils.getFormatter().format(Calendar.getInstance().getTime()));
-                        saveBaiSiBuDeJieApi(1, null);
+                        try {
+                            saveBaiSiBuDeJieApi(1, null);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("UpdateBaiSiBuDeJie执行结束，当前时间" + TimeUtils.getFormatter().format(Calendar.getInstance().getTime()) + "此次新增数据：" + addCount);
                     } catch (InterruptedException e) {
                         startRun = false;
                         System.out.println("-------------UpdateBaiSiBuDeJie任务运行出现异常--------------");

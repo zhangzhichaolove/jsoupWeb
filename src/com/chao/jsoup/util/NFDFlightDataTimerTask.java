@@ -3,7 +3,6 @@ package com.chao.jsoup.util;
 import com.chao.jsoup.request.UpdateBaiSiBuDeJie;
 import com.chao.jsoup.request.UpdateBaiSiBuDeJieAppData;
 
-import java.text.SimpleDateFormat;
 import java.util.TimerTask;
 
 /**
@@ -14,7 +13,6 @@ import java.util.TimerTask;
  * @author wls
  */
 public class NFDFlightDataTimerTask extends TimerTask {
-    private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public void run() {

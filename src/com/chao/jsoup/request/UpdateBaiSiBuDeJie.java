@@ -36,6 +36,7 @@ public class UpdateBaiSiBuDeJie {
     }
 
     public static void start() {
+        continuityRepeat = 0;
         if (!startRun) {
             startRun = true;
             ExecutorServiceUtils.getInstance().execute(new Runnable() {
@@ -119,6 +120,7 @@ public class UpdateBaiSiBuDeJie {
     }
 
     private static void saveCount() {
+        continuityRepeat = 0;
         maxContinuityRepeat = 20;
         RequestCount budejie = TableUtils.findCreateTable("budejie");
         Session session = HibernateUtils.openSession();

@@ -36,6 +36,7 @@ public class UpdateBaiSiBuDeJieAppData {
     }
 
     public static void start() {
+        continuityRepeat = 0;
         ExecutorServiceUtils.getInstance().execute(new Runnable() {
             @Override
             public void run() {
@@ -137,7 +138,8 @@ public class UpdateBaiSiBuDeJieAppData {
     }
 
     private static void saveCount() {
-        maxContinuityRepeat = 20;
+        continuityRepeat = 0;
+        maxContinuityRepeat = 50;
         RequestCount budejie = TableUtils.findCreateTable("budejie_app");
         Session session = HibernateUtils.openSession();
         budejie.setDataCount(TableUtils.findTableCount("budejie_app"));

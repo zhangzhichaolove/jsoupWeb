@@ -19,23 +19,34 @@ import java.util.Date;
  * Created by 003 on 2018/3/30.
  */
 public class UpdateBaiSiBuDeJieAppData {
+    private static UpdateBaiSiBuDeJieAppData instance;
+    private Long addCount = 0L;//新增统计
+    private int continuityRepeat = 0;//连续重复统计
+    private int maxContinuityRepeat = 50;//最大连续重复限制
+    private Gson gson = GsonUtils.getGson();
 
-    private static Long addCount = 0L;//新增统计
-    private static int continuityRepeat = 0;//连续重复统计
-    private static int maxContinuityRepeat = 50;//最大连续重复限制
-    private static Gson gson = GsonUtils.getGson();
+    public static UpdateBaiSiBuDeJieAppData getInstance() {
+        if (instance == null) {
+            synchronized (UpdateBaiSiBuDeJieAppData.class) {
+                if (instance == null) {
+                    instance = new UpdateBaiSiBuDeJieAppData();
+                }
+            }
+        }
+        return instance;
+    }
 
     public static void main(String[] args) {
         HibernateUtils.openSession();
-        start();
+        //start();
     }
 
-    public static void start(Integer maxCount) {
+    public void start(Integer maxCount) {
         maxContinuityRepeat = maxCount;
         start();
     }
 
-    public static void start() {
+    public void start() {
         continuityRepeat = 0;
         ExecutorServiceUtils.getInstance().execute(new Runnable() {
             @Override
@@ -59,7 +70,7 @@ public class UpdateBaiSiBuDeJieAppData {
     }
 
 
-    public static void saveBaiSiBuDeJieApi() {
+    public void saveBaiSiBuDeJieApi() {
         //System.out.println("当前加载页码：" + page);
         String json = HttpTool.doGet("http://d.api.budejie.com/topic/recommend/budejie-android-6.9.2/0-20.json");
         //System.out.println(json);
@@ -137,7 +148,7 @@ public class UpdateBaiSiBuDeJieAppData {
         }
     }
 
-    private static void saveCount() {
+    private void saveCount() {
         continuityRepeat = 0;
         maxContinuityRepeat = 50;
         RequestCount budejie = TableUtils.findCreateTable("budejie_app");

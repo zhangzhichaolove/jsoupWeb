@@ -16,8 +16,8 @@ public class NFDFlightDataTimerTask extends TimerTask {
 
     @Override
     public void run() {
-        UpdateBaiSiBuDeJie.start();
-        UpdateBaiSiBuDeJieAppData.start();
+        UpdateBaiSiBuDeJie.getInstance().start();
+        UpdateBaiSiBuDeJieAppData.getInstance().start();
     }
 
 }

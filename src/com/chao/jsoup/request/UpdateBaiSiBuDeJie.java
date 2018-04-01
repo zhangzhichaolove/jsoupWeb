@@ -18,24 +18,40 @@ import java.util.Date;
  * Created by Chao on 2017/10/11.
  */
 public class UpdateBaiSiBuDeJie {
-    private static Long addCount = 0L;//新增统计
-    private static int continuityRepeat = 0;//连续重复统计
-    private static int maxContinuityRepeat = 20;//最大连续重复限制
-    private static Gson gson = GsonUtils.getGson();
-    public static boolean startRun = false;
+    private static UpdateBaiSiBuDeJie instance;
+    private Long addCount = 0L;//新增统计
+    private int continuityRepeat = 0;//连续重复统计
+    private int maxContinuityRepeat = 20;//最大连续重复限制
+    private Gson gson = GsonUtils.getGson();
+    private boolean startRun = false;
+
+    public static UpdateBaiSiBuDeJie getInstance() {
+        if (instance == null) {
+            synchronized (UpdateBaiSiBuDeJie.class) {
+                if (instance == null) {
+                    instance = new UpdateBaiSiBuDeJie();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public boolean isStartRun() {
+        return startRun;
+    }
 
     public static void main(String[] args) {
         HibernateUtils.openSession();
-        startRun = false;
-        start();
+        //startRun = false;
+        //start();
     }
 
-    public static void start(Integer maxCount) {
+    public void start(Integer maxCount) {
         maxContinuityRepeat = maxCount;
         start();
     }
 
-    public static void start() {
+    public void start() {
         continuityRepeat = 0;
         if (!startRun) {
             startRun = true;
@@ -63,12 +79,12 @@ public class UpdateBaiSiBuDeJie {
         }
     }
 
-    public static void stop() {
+    public void stop() {
         startRun = false;
     }
 
 
-    public static void saveBaiSiBuDeJieApi(int page, String maxtime) {
+    public void saveBaiSiBuDeJieApi(int page, String maxtime) {
         //System.out.println("当前加载页码：" + page);
         String json = HttpTool.doGet("http://api.budejie.com/api/api_open.php?a=list&c=data&type=1&page=" + page + "&maxtime=" + maxtime);
         //System.out.println(json);
@@ -119,7 +135,7 @@ public class UpdateBaiSiBuDeJie {
         }
     }
 
-    private static void saveCount() {
+    private void saveCount() {
         continuityRepeat = 0;
         maxContinuityRepeat = 20;
         RequestCount budejie = TableUtils.findCreateTable("budejie");

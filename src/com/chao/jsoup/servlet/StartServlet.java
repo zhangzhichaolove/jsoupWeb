@@ -28,15 +28,15 @@ public class StartServlet extends HttpServlet {
         if (!StringUtils.isNullOrEmpty(count)) {
             try {
                 Integer maxCount = Integer.valueOf(count);
-                UpdateBaiSiBuDeJie.start(maxCount);
+                UpdateBaiSiBuDeJie.getInstance().start(maxCount);
             } catch (NumberFormatException e) {
-                UpdateBaiSiBuDeJie.start();
+                UpdateBaiSiBuDeJie.getInstance().start();
                 e.printStackTrace();
             }
         } else {
-            UpdateBaiSiBuDeJie.start();
+            UpdateBaiSiBuDeJie.getInstance().start();
         }
-        resp.getWriter().write(JsonUtil.toJsonData(UpdateBaiSiBuDeJie.startRun ? "爬虫服务正在运行！" : "爬虫服务已经停止！"));
+        resp.getWriter().write(JsonUtil.toJsonData(UpdateBaiSiBuDeJie.getInstance().isStartRun() ? "爬虫服务正在运行！" : "爬虫服务已经停止！"));
     }
 
     @Override

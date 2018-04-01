@@ -23,8 +23,8 @@ public class StopServlet extends HttpServlet {
         } else {
             resp.setContentType("text/html;charset=utf-8");
         }
-        UpdateBaiSiBuDeJie.stop();
-        resp.getWriter().write(JsonUtil.toJsonData(UpdateBaiSiBuDeJie.startRun ? "爬虫服务正在运行！" : "爬虫服务已经停止！"));
+        UpdateBaiSiBuDeJie.getInstance().stop();
+        resp.getWriter().write(JsonUtil.toJsonData(UpdateBaiSiBuDeJie.getInstance().isStartRun() ? "爬虫服务正在运行！" : "爬虫服务已经停止！"));
     }
 
     @Override

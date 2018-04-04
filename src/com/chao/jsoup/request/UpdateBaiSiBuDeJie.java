@@ -1,11 +1,11 @@
 package com.chao.jsoup.request;
 
-import com.chao.jsoup.HttpTool;
 import com.chao.jsoup.model.BuDeJieContent;
 import com.chao.jsoup.model.BuDeJieModel;
 import com.chao.jsoup.model.RequestCount;
 import com.chao.jsoup.util.*;
 import com.google.gson.Gson;
+import com.mysql.jdbc.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -86,7 +86,15 @@ public class UpdateBaiSiBuDeJie {
 
     public void saveBaiSiBuDeJieApi(int page, String maxtime) {
         //System.out.println("当前加载页码：" + page);
-        String json = HttpTool.doGet("http://api.budejie.com/api/api_open.php?a=list&c=data&type=1&page=" + page + "&maxtime=" + maxtime);
+        String json = null;
+        try {
+            json = OKHttpUtils.get("http://api.budejie.com/api/api_open.php?a=list&c=data&type=1&page=" + page + "&maxtime=" + maxtime);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (StringUtils.isNullOrEmpty(json)) {
+            return;
+        }
         //System.out.println(json);
         BuDeJieModel model = gson.fromJson(json, BuDeJieModel.class);
         if (model != null) {

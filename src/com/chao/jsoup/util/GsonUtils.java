@@ -4,7 +4,6 @@ import com.google.gson.*;
 import com.mysql.jdbc.StringUtils;
 
 import java.lang.reflect.Type;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -33,14 +32,14 @@ public class GsonUtils {
                     if (time.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}") || time.matches("\\d{4}-\\d{2}-\\d{2}")) {
                         try {
                             date = sd.parse(time);
-                        } catch (ParseException e) {
+                        } catch (Exception e) {
                             date = new Date();
                             e.printStackTrace();
                         }
                     } else if (time.matches("\\d{4}/\\d{2}/\\d{2} \\d{2}:\\d{2}:\\d{2}") || time.matches("\\d{4}/\\d{2}/\\d{2}")) {
                         try {
                             date = sdf.parse(time);
-                        } catch (ParseException e) {
+                        } catch (Exception e) {
                             date = new Date();
                             e.printStackTrace();
                         }

@@ -142,7 +142,7 @@ public class UpdateBaiSiBuDeJieAppData {
                     identical = identical + 1;//统计重复数量
                 }
             }
-            if (identical >= model.getList().size()) {//此次未新增任何内容，完全重复。
+            if (model.getList() == null || identical >= model.getList().size()) {//此次未新增任何内容，完全重复。
                 continuityRepeat = continuityRepeat + 1;
             }
             session.close();

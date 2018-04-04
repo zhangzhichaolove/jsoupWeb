@@ -1,12 +1,12 @@
 package com.chao.jsoup.request;
 
-import com.chao.jsoup.HttpTool;
 import com.chao.jsoup.bean.BuDeJieAppBean;
 import com.chao.jsoup.bean.BuDeJieAppList;
 import com.chao.jsoup.model.BuDeJieAppContent;
 import com.chao.jsoup.model.RequestCount;
 import com.chao.jsoup.util.*;
 import com.google.gson.Gson;
+import com.mysql.jdbc.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -24,6 +24,8 @@ public class UpdateBaiSiBuDeJieAppData {
     private int continuityRepeat = 0;//连续重复统计
     private int maxContinuityRepeat = 50;//最大连续重复限制
     private Gson gson = GsonUtils.getGson();
+    private String random = "http://d.api.budejie.com/topic/recommend/budejie-android-6.9.2/0-20.json";
+    private String normal = "http://c.api.budejie.com/topic/list/jingxuan/1/budejie-android-6.9.2/0-20.json";
 
     public static UpdateBaiSiBuDeJieAppData getInstance() {
         if (instance == null) {
@@ -56,7 +58,7 @@ public class UpdateBaiSiBuDeJieAppData {
                     addCount = 0L;
                     System.out.println("UpdateBaiSiBuDeJieAppData执行，当前时间" + TimeUtils.getFormatter().format(Calendar.getInstance().getTime()));
                     try {
-                        saveBaiSiBuDeJieApi();
+                        saveBaiSiBuDeJieApi(random);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -70,15 +72,24 @@ public class UpdateBaiSiBuDeJieAppData {
     }
 
 
-    public void saveBaiSiBuDeJieApi() {
+    public void saveBaiSiBuDeJieApi(String url) {
         //System.out.println("当前加载页码：" + page);
-        String json = HttpTool.doGet("http://d.api.budejie.com/topic/recommend/budejie-android-6.9.2/0-20.json");
+        //String json = HttpTool.doGet(url);
+        String json = null;
+        try {
+            json = OKHttpUtils.get(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (StringUtils.isNullOrEmpty(json)) {
+            return;
+        }
         //System.out.println(json);
         Session session = HibernateUtils.openSession();
         BuDeJieAppBean model = gson.fromJson(json, BuDeJieAppBean.class);
         if (model != null) {
             int identical = 0;//完全相同计数
-            for (int i = 0; i < model.getList().size(); i++) {
+            for (int i = 0; model.getList() != null && i < model.getList().size(); i++) {
                 BuDeJieAppList bean = model.getList().get(i);
                 BuDeJieAppContent content = new BuDeJieAppContent();
                 //System.out.println(bean.getText());
@@ -140,7 +151,17 @@ public class UpdateBaiSiBuDeJieAppData {
                 saveCount();
                 return;
             } else {
-                saveBaiSiBuDeJieApi();
+                if (url.startsWith("http://c.api.budejie.com")) {//如果已经切换到正常接口则直接递归
+                    int last = url.lastIndexOf("/") + 1;
+                    url = url.replaceAll(url.substring(last), model.getInfo().getNp() + "-20.json");
+                    saveBaiSiBuDeJieApi(url);
+                    return;
+                }
+                if (continuityRepeat >= maxContinuityRepeat / 2) {
+                    saveBaiSiBuDeJieApi(normal);
+                } else {
+                    saveBaiSiBuDeJieApi(url);
+                }
             }
         } else {
             saveCount();

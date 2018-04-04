@@ -1,6 +1,7 @@
 package com.chao.jsoup.util;
 
 import com.google.gson.*;
+import com.mysql.jdbc.StringUtils;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;
@@ -26,6 +27,9 @@ public class GsonUtils {
                     String time = json.getAsString();
                     Date date = null;
                     //Pattern.matches(pattern, content)
+                    if (StringUtils.isNullOrEmpty(time)) {
+                        return new Date();
+                    }
                     if (time.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}") || time.matches("\\d{4}-\\d{2}-\\d{2}")) {
                         try {
                             date = sd.parse(time);

@@ -40,7 +40,7 @@ public class UpdateBaiSiBuDeJieAppData {
 
     public static void main(String[] args) {
         HibernateUtils.openSession();
-        //start();
+        getInstance().start();
     }
 
     public void start(Integer maxCount) {
@@ -85,6 +85,10 @@ public class UpdateBaiSiBuDeJieAppData {
             return;
         }
         //System.out.println(json);
+        if (!JsonRegexUtil.isJson(json)) {
+            System.out.println("JSON格式异常" + json);
+            return;
+        }
         Session session = HibernateUtils.openSession();
         BuDeJieAppBean model = gson.fromJson(json, BuDeJieAppBean.class);
         if (model != null) {

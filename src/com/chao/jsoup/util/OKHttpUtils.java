@@ -11,6 +11,30 @@ import java.util.Map;
  */
 public class OKHttpUtils {
     private static final OkHttpClient client = new OkHttpClient();
+    private static final OkHttpClient mClient;
+
+    static {
+        Interceptor mTokenInterceptor = new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request originalRequest = chain.request();
+                Request authorised = originalRequest.newBuilder()
+                        .addHeader("Vary", "Accept-Encoding")
+                        .addHeader("Cache-Control", "max-age=0")
+                        .addHeader("Content-Encoding", "gzip")
+                        .addHeader("Age", "62")
+                        .addHeader("Accept-Ranges", "bytes")
+                        .addHeader("X-Cache", "cached")
+                        .addHeader("Via", "1.1 varnish-v4")
+                        .addHeader("Proxy-Connection", "keep-alive")
+                        .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36")
+                        //Mozilla/5.0 (Linux; U; Android 7.0; zh-CN; MI 5 Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/40.0.2214.89 UCBrowser/11.4.1.939 UWS/2.11.0.8 Mobile Safari/537.36 Shuqi (Xiaomi-MI 5__shuqi__10.6.7.64__1075)
+                        .build();
+                return chain.proceed(authorised);
+            }
+        };
+        mClient = new OkHttpClient.Builder().addNetworkInterceptor(mTokenInterceptor).build();
+    }
 
     /**
      * 同步GET
@@ -43,15 +67,19 @@ public class OKHttpUtils {
     public static String getWeb(String utl) throws Exception {
         Request request = new Request.Builder()
                 .url(utl)
-                .addHeader("Cache-Control", "no-cache")
-                .addHeader("Pragma", "no-cache")
+                .addHeader("Vary", "Accept-Encoding")
+                .addHeader("Cache-Control", "max-age=0")
+                .addHeader("Content-Encoding", "gzip")
+                .addHeader("Age", "62")
+                .addHeader("Accept-Ranges", "bytes")
+                .addHeader("X-Cache", "cached")
+                .addHeader("Via", "1.1 varnish-v4")
                 .addHeader("Proxy-Connection", "keep-alive")
-                .addHeader("Upgrade-Insecure-Requests", "1")
                 .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36")
                 //Mozilla/5.0 (Linux; U; Android 7.0; zh-CN; MI 5 Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/40.0.2214.89 UCBrowser/11.4.1.939 UWS/2.11.0.8 Mobile Safari/537.36 Shuqi (Xiaomi-MI 5__shuqi__10.6.7.64__1075)
                 .build();
 
-        Response response = client.newCall(request).execute();
+        Response response = mClient.newCall(request).execute();
 
         if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
         String string = response.body().string();
@@ -154,4 +182,4 @@ public class OKHttpUtils {
         public void onResponse(String content);
     }
 
-} 
+}

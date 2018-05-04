@@ -36,6 +36,30 @@ public class OKHttpUtils {
     }
 
     /**
+     * 同步GET带请求头
+     *
+     * @throws Exception
+     */
+    public static String getWeb(String utl) throws Exception {
+        Request request = new Request.Builder()
+                .url(utl)
+                .addHeader("Cache-Control", "no-cache")
+                .addHeader("Pragma", "no-cache")
+                .addHeader("Proxy-Connection", "keep-alive")
+                .addHeader("Upgrade-Insecure-Requests", "1")
+                .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36")
+                //Mozilla/5.0 (Linux; U; Android 7.0; zh-CN; MI 5 Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/40.0.2214.89 UCBrowser/11.4.1.939 UWS/2.11.0.8 Mobile Safari/537.36 Shuqi (Xiaomi-MI 5__shuqi__10.6.7.64__1075)
+                .build();
+
+        Response response = client.newCall(request).execute();
+
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+        String string = response.body().string();
+        //System.out.println(string);
+        return string;
+    }
+
+    /**
      * 异步GET
      *
      * @throws Exception

@@ -1,5 +1,6 @@
 package com.chao.jsoup.request;
 
+import com.chao.jsoup.HttpTool;
 import com.chao.jsoup.bean.BuDeJieAppBean;
 import com.chao.jsoup.bean.BuDeJieAppList;
 import com.chao.jsoup.model.BuDeJieAppContent;
@@ -24,7 +25,7 @@ public class UpdateBaiSiBuDeJieAppData {
     private int continuityRepeat = 0;//连续重复统计
     private int maxContinuityRepeat = 50;//最大连续重复限制
     private Gson gson = GsonUtils.getGson();
-    private String random = "http://d.api.budejie.com/topic/recommend/budejie-android-6.9.2/0-20.json";
+    private String random = "https://d.api.budejie.com/topic/recommend/budejie-android-6.9.2/0-20.json";
     private String normal = "http://c.api.budejie.com/topic/list/jingxuan/1/budejie-android-6.9.2/0-20.json";
 
     public static UpdateBaiSiBuDeJieAppData getInstance() {

@@ -1,5 +1,6 @@
 package com.chao.jsoup.request;
 
+import com.chao.jsoup.HttpTool;
 import com.chao.jsoup.model.BuDeJieContent;
 import com.chao.jsoup.model.BuDeJieModel;
 import com.chao.jsoup.model.RequestCount;
@@ -43,7 +44,7 @@ public class UpdateBaiSiBuDeJie {
     public static void main(String[] args) {
         HibernateUtils.openSession();
         //startRun = false;
-        //start();
+        getInstance().start();
     }
 
     public void start(Integer maxCount) {
@@ -88,7 +89,8 @@ public class UpdateBaiSiBuDeJie {
         //System.out.println("当前加载页码：" + page);
         String json = null;
         try {
-            json = OKHttpUtils.get("http://api.budejie.com/api/api_open.php?a=list&c=data&type=1&page=" + page + "&maxtime=" + maxtime);
+            json = OKHttpUtils.getWeb("https://api.budejie.com/api/api_open.php?a=list&c=data&type=1&page=" + page + "&maxtime=" + maxtime);
+            //json = HttpTool.doGet("https://api.budejie.com/api/api_open.php?a=list&c=data&type=1&page=" + page + "&maxtime=" + maxtime);
         } catch (Exception e) {
             e.printStackTrace();
         }

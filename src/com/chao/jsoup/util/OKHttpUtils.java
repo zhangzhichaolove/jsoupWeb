@@ -19,15 +19,14 @@ public class OKHttpUtils {
             public Response intercept(Chain chain) throws IOException {
                 Request originalRequest = chain.request();
                 Request authorised = originalRequest.newBuilder()
-                        .addHeader("Vary", "Accept-Encoding")
+                        .addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
+                        .addHeader("Accept-Encoding", "gzip, deflate")
+                        .addHeader("Accept-Language", "zh-CN,zh;q=0.9")
                         .addHeader("Cache-Control", "max-age=0")
-                        .addHeader("Content-Encoding", "gzip")
-                        .addHeader("Age", "62")
-                        .addHeader("Accept-Ranges", "bytes")
-                        .addHeader("X-Cache", "cached")
-                        .addHeader("Via", "1.1 varnish-v4")
-                        .addHeader("Proxy-Connection", "keep-alive")
-                        .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36")
+                        .addHeader("Connection", "keep-alive")
+                        .addHeader("Host", "api.budejie.com")
+                        .addHeader("Upgrade-Insecure-Requests", "1")
+                        .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36")
                         //Mozilla/5.0 (Linux; U; Android 7.0; zh-CN; MI 5 Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/40.0.2214.89 UCBrowser/11.4.1.939 UWS/2.11.0.8 Mobile Safari/537.36 Shuqi (Xiaomi-MI 5__shuqi__10.6.7.64__1075)
                         .build();
                 return chain.proceed(authorised);

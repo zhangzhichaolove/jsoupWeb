@@ -35,7 +35,7 @@ public class TimerManager {
 
         NFDFlightDataTimerTask task = new NFDFlightDataTimerTask();
         //安排指定的任务在指定的时间开始进行重复的固定延迟执行。
-        timer.schedule(task, date, PERIOD_DAY);
+        timer.schedule(task, new Date(), PERIOD_DAY);
     }
 
     // 增加或减少天数

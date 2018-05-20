@@ -11,7 +11,7 @@ import java.util.Map;
  * Created by Chao on 2017/8/18.
  */
 public class OKHttpUtils {
-    private static final OkHttpClient client = new OkHttpClient();
+    private static final OkHttpClient client;
     private static final OkHttpClient mClient;
 
     static {
@@ -34,6 +34,25 @@ public class OKHttpUtils {
             }
         };
         mClient = new OkHttpClient.Builder().addNetworkInterceptor(mTokenInterceptor).build();
+        Interceptor mHeaderInterceptor = new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request originalRequest = chain.request();
+                Request authorised = originalRequest.newBuilder()
+                        .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
+                        .header("Accept-Encoding", "gzip, deflate")
+                        .header("Accept-Language", "zh-CN,zh;q=0.9")
+                        .header("Cache-Control", "max-age=0")
+                        .header("Connection", "keep-alive")
+                        .header("Host", "d.api.budejie.com")
+                        .header("Upgrade-Insecure-Requests", "1")
+                        .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36")
+                        //Mozilla/5.0 (Linux; U; Android 7.0; zh-CN; MI 5 Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/40.0.2214.89 UCBrowser/11.4.1.939 UWS/2.11.0.8 Mobile Safari/537.36 Shuqi (Xiaomi-MI 5__shuqi__10.6.7.64__1075)
+                        .build();
+                return chain.proceed(authorised);
+            }
+        };
+        client = new OkHttpClient.Builder().addNetworkInterceptor(mHeaderInterceptor).build();
     }
 
 
@@ -68,7 +87,6 @@ public class OKHttpUtils {
     public static String getWeb(String utl) throws Exception {
         Request request = new Request.Builder()
                 .url(utl)
-                //Mozilla/5.0 (Linux; U; Android 7.0; zh-CN; MI 5 Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/40.0.2214.89 UCBrowser/11.4.1.939 UWS/2.11.0.8 Mobile Safari/537.36 Shuqi (Xiaomi-MI 5__shuqi__10.6.7.64__1075)
                 .build();
 
         Response response = mClient.newCall(request).execute();

@@ -78,7 +78,7 @@ public class UpdateBaiSiBuDeJieAppData {
         //String json = HttpTool.doGet(url);
         String json = null;
         try {
-            json = OKHttpUtils.getWeb(url);
+            json = OKHttpUtils.get(url);
         } catch (Exception e) {
             e.printStackTrace();
         }
